@@ -40,7 +40,7 @@ mvn test
 * TestNG: Testing framework for test execution and reporting.
 
 ## Context of Automated Web
-This automation shows 3 possible cases that an unregistered/logged user can perform without the need to have an account, such as searching for products, entering sections and changing their location.
+This automation shows 3 cases that an unregistered/logged user can perform without the need to have an account, such as searching for products, entering sections and changing their location.
 These scenarios are covered in these tests.
 ### TC001 : 
 Validation of the Product Purchase flow with an Anonymous User (Without logging in). Covering the search by user criteria, expecting a list of products as a result, entering to the desired item, viewing the product detail and clicking on the 'Buy now' button available, and redirecting to the previous validation to 'Buy now' .
