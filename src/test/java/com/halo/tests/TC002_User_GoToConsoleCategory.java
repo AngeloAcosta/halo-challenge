@@ -3,12 +3,14 @@ package com.halo.tests;
 import com.halo.base.GlobalVariables;
 import com.halo.pages.ConsoleCategoryPage;
 import com.halo.pages.HomePage;
+import com.halo.pages.NavBar;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TC002_User_GoToConsoleCategory extends BaseTest {
 
     HomePage homePage;
+    NavBar navBar;
     ConsoleCategoryPage consoleCategoryPage;
     String expectedConsoleTitle;
 
@@ -17,6 +19,7 @@ public class TC002_User_GoToConsoleCategory extends BaseTest {
     public void beforeMethod() {
         super.beforeMethod();
         homePage = new HomePage(driver);
+        navBar = new NavBar(driver);
         consoleCategoryPage = new ConsoleCategoryPage(driver);
         expectedConsoleTitle = "Consolas y Videojuegos";
     }
@@ -27,10 +30,10 @@ public class TC002_User_GoToConsoleCategory extends BaseTest {
 
         homePage.homePageHasLoaded();
         homePage.acceptCookies();
-        homePage.hoverCategories();
-        homePage.selectConsoleCategory();
+        navBar.hoverCategories();
+        navBar.selectConsoleCategory();
 
-        consoleCategoryPage.moveToTitle();
+        consoleCategoryPage.scrollToTitle();
         consoleCategoryPage.validateConsoleTitle(expectedConsoleTitle);
     }
 }

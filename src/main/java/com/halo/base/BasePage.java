@@ -31,10 +31,12 @@ public class BasePage {
         return driver;
     }
 
-    // Launch Browser
+    /**
+     * @param url:
+     */
     public void launchBrowser(String url) {
-        driver.get(url);
         driver.manage().window().maximize();
+        driver.get(url);
     }
 
     // Find Element
@@ -44,6 +46,14 @@ public class BasePage {
 
     protected List<WebElement> findElements(By locator) {
         return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+    }
+
+    protected WebElement elementToBeClickable(By locator) {
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    protected WebElement elementToBePresence(By locator) {
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
     protected void type(By locator, String inputText) {
@@ -60,7 +70,7 @@ public class BasePage {
     }
 
     protected void hoverElement(By locator) {
-        WebElement actionElement = find(locator);
+        WebElement actionElement = elementToBeClickable(locator);
         Actions a = new Actions(driver);
         if(actionElement.isDisplayed()) a.moveToElement(actionElement).perform();
     }
@@ -89,8 +99,8 @@ public class BasePage {
         selector.selectByValue(value);
     }
 
-    protected WebElement elementToBeClickable(By locator) {
-        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    protected void pageHasLoaded(By locator) {
+        find(locator);
     }
 
     protected void switchToIFrame(By locator) {

@@ -12,7 +12,7 @@ public class ConsoleCategoryPage extends BasePage {
         super(driver);
     }
 
-    public void moveToTitle() {
+    public void scrollToTitle() {
         scrollToElement(lstCatConsoleTitle);
     }
 

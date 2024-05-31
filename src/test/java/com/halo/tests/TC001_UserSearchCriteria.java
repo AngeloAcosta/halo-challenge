@@ -1,17 +1,14 @@
 package com.halo.tests;
 
 import com.halo.base.GlobalVariables;
-import com.halo.pages.HomePage;
-import com.halo.pages.ProductDetailPage;
-import com.halo.pages.SearchResultsPage;
-import com.halo.pages.UnloggedUser;
-import org.testng.Assert;
+import com.halo.pages.*;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TC001_UserSearchCriteria extends BaseTest {
 
     HomePage homePage;
+    NavBar navBar;
     SearchResultsPage searchResultsPage;
     ProductDetailPage productDetailPage;
     UnloggedUser unloggedUser;
@@ -28,6 +25,7 @@ public class TC001_UserSearchCriteria extends BaseTest {
     public void beforeMethod() {
         super.beforeMethod();
         homePage = new HomePage(driver);
+        navBar = new NavBar(driver);
         searchResultsPage = new SearchResultsPage(driver);
         productDetailPage = new ProductDetailPage(driver);
         unloggedUser = new UnloggedUser(driver);
@@ -44,7 +42,9 @@ public class TC001_UserSearchCriteria extends BaseTest {
     public void test() {
         basePage.launchBrowser(GlobalVariables.APP_URL);
 
-        homePage.searchForElement(criteria);
+        homePage.homePageHasLoaded();
+
+        navBar.searchForElement(criteria);
 
         searchResultsPage.selectElementByIndex(elementOnListIndex,propertyValue, attributeProperty);
 
@@ -52,4 +52,5 @@ public class TC001_UserSearchCriteria extends BaseTest {
 
         unloggedUser.isUnloggedMessageDisplayed(expectedText);
     }
+
 }
