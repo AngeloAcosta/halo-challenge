@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -15,13 +16,12 @@ import java.util.List;
 
 public class BasePage {
     private WebDriver driver;
-    private static WebDriverWait wait;
-    private final By cookieAccept = By.xpath("//button[normalize-space()='Aceptar cookies']");
+    private WebDriverWait wait;
 
     // Constructor
     public BasePage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(GlobalVariables.EXPLICIT_TIMEOUT));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(GlobalVariables.EXPLICIT_TIMEOUT));
     }
 
     // Set WebDriver
@@ -38,7 +38,7 @@ public class BasePage {
     }
 
     // Find Element
-    private WebElement find(By locator) {
+    protected WebElement find(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
@@ -46,47 +46,60 @@ public class BasePage {
         return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
     }
 
-    public void type(By locator, String inputText) {
+    protected void type(By locator, String inputText) {
+        find(locator).clear();
         find(locator).sendKeys(inputText);
     }
 
-    public void click(By locator) {
-        find(locator).click();
+    protected void click(By locator) {
+        elementToBeClickable(locator).click();
     }
 
-    public void clickByJs(WebElement e) {
+    protected void clickByJs(WebElement e) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].click()", e);
     }
 
-    public boolean isElementEnabled(By locator) {
-        try {
-            return find(locator).isEnabled();
-        } catch (AssertionError e) {
-            Assert.fail();
-            return false;
-        }
-    }
-
     protected void hoverElement(By locator) {
+        WebElement actionElement = find(locator);
         Actions a = new Actions(driver);
-        a.moveToElement(find(locator)).perform();
+        if(actionElement.isDisplayed()) a.moveToElement(actionElement).perform();
     }
 
     protected void scrollToElement(By locator) {
+        WebElement actionElement = find(locator);
         Actions a = new Actions(driver);
-        a.scrollToElement(find(locator)).perform();
+        a.scrollToElement(actionElement).perform();
     }
 
-    public void acceptCookies() {
-        find(cookieAccept).click();
-    }
-
-    public void assertEqualsText(By locator, String expected) {
+    protected void assertEqualsText(By locator, String expected) {
         try {
             Assert.assertEquals(find(locator).getText(), expected);
         } catch (AssertionError e) {
-            Assert.fail();
+            Assert.fail("Actual value " + find(locator).getText() + " does not match with expected value " + expected);
         }
+    }
+
+    protected void assertTextChanges(By locator, String expected) {
+        wait.until(ExpectedConditions.textToBe(locator, expected));
+    }
+
+    protected void selectFromDropdown(By locator, String value) {
+        WebElement selectElement = elementToBeClickable(locator);
+        Select selector = new Select(selectElement);
+        selector.selectByValue(value);
+    }
+
+    protected WebElement elementToBeClickable(By locator) {
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    protected void switchToIFrame(By locator) {
+        WebElement iframeElement = find(locator);
+        driver.switchTo().frame(iframeElement);
+    }
+
+    protected void switchToMainFrame() {
+        driver.switchTo().defaultContent();
     }
 
 }

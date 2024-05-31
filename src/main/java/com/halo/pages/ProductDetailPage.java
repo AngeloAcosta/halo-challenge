@@ -6,13 +6,13 @@ import org.openqa.selenium.WebDriver;
 
 public class ProductDetailPage extends BasePage {
 
+    private By btnBuyNow = By.xpath("//*[text()='Comprar ahora']//parent::button");
+
     public ProductDetailPage(WebDriver driver) {
         super(driver);
     }
 
-    private By btnBuyNow = By.xpath("//*[text()='Comprar ahora']//parent::button");
-
-    public boolean isBtnBuyNowPresent() {
-        return isElementEnabled(btnBuyNow);
+    public void addToCart() {
+        click(btnBuyNow);
     }
 }

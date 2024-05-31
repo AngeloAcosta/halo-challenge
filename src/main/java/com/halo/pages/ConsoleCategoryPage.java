@@ -6,12 +6,11 @@ import org.openqa.selenium.WebDriver;
 
 public class ConsoleCategoryPage extends BasePage {
 
+    private By lstCatConsoleTitle = By.xpath("//h2[normalize-space()='Consolas y Videojuegos']");
 
     public ConsoleCategoryPage(WebDriver driver) {
         super(driver);
     }
-
-    private By lstCatConsoleTitle = By.xpath("//h2[normalize-space()='Consolas y Videojuegos']");
 
     public void moveToTitle() {
         scrollToElement(lstCatConsoleTitle);

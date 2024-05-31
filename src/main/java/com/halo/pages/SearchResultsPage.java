@@ -9,11 +9,11 @@ import java.util.List;
 
 public class SearchResultsPage extends BasePage {
 
+    private By elementsOnSearchResult = By.xpath("//div[@class='ui-search-result__wrapper']//a[1]");
+
     public SearchResultsPage(WebDriver driver) {
         super(driver);
     }
-
-    private By elementsOnSearchResult = By.xpath("//div[@class='ui-search-result__wrapper']//a[1]");
 
     protected WebElement filterSearchResult(By locator, int elementIndex, String propertyValue, String attributeProperty) {
         List<WebElement> elements = findElements(locator);

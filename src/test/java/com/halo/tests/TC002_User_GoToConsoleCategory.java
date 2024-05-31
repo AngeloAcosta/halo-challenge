@@ -24,8 +24,9 @@ public class TC002_User_GoToConsoleCategory extends BaseTest {
     @Test
     public void test() {
         basePage.launchBrowser(GlobalVariables.APP_URL);
-        basePage.acceptCookies();
 
+        homePage.homePageHasLoaded();
+        homePage.acceptCookies();
         homePage.hoverCategories();
         homePage.selectConsoleCategory();
 

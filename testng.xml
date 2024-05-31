@@ -1,0 +1,20 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="MyTestSuite">
+    <test name="MyTest">
+        <classes>
+            <class name="com.halo.tests.TC001_UserSearchCriteria"/>
+        </classes>
+    </test>
+
+    <test name="MyTest2">
+        <classes>
+            <class name="com.halo.tests.TC002_User_GoToConsoleCategory"/>
+        </classes>
+    </test>
+
+    <test name="MyTest3">
+        <classes>
+            <class name="com.halo.tests.TC003_UserChooseLocation"/>
+        </classes>
+    </test>
+</suite>
